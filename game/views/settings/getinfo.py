@@ -16,7 +16,7 @@ def getinfo_web(request): # 在网页端时的getinfo
             'result': "未登录",
         })
     else:
-        player = Player.objects.all()[0] # Player.objects是一个数组，代表Player数据表的所有元素的数组，这里为了测试就直接返回第一个人的信息，后面再实现找出这个用户
+        player = Player.objects.get(user=user) # Player.objects是一个数组，代表Player数据表的所有元素的数组，这里为了测试就直接返回第一个人的信息，后面再实现找出这个用户
         return JsonResponse({ # 返回Json
             'result': "success",
             'username': player.user.username, # 用户名
