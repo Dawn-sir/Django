@@ -5,6 +5,7 @@ from game.models.player.player import Player
 
 def register(request):
     data = request.GET
+
     username = data.get("username", "").strip()
     password = data.get("password", "").strip()
     password_confirm = data.get("password_confirm", "").strip()
