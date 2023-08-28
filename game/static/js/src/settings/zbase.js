@@ -124,7 +124,6 @@ class Settings
         let outer = this;
 
         this.root.AcWingOS.api.oauth2.authorize(appid, redirect_uri, scope, state, function(resp) {
-            console.log(resp)
             if (resp.result === "success") {
                 outer.username = resp.username;
                 outer.photo = resp.photo;
@@ -159,7 +158,6 @@ class Settings
                 platform: outer.platform, // 平台信息
             },
             success: function(resp){ // resp是发送请求之后返回的响应
-                console.log(resp); // 测试，成功之后写入下面的
                 if (resp.result === "success")
                 {
                     outer.username = resp.username;
@@ -229,7 +227,6 @@ class Settings
             url: "https://app5873.acapp.acwing.com.cn/settings/acwing/web/apply_code/",
             type: "GET",
             success: function(resp) {
-                console.log(resp)
                 if (resp.result === "success") {
                     window.location.replace(resp.apply_code_url);
                 }
@@ -252,7 +249,6 @@ class Settings
                 password: password,
             },
             success: function(resp) {
-                console.log(resp)
                 if (resp.result === "success") {
                     location.reload();
                 } else {
@@ -278,7 +274,6 @@ class Settings
                 password_confirm: password_confirm,
             },
             success: function(resp) {
-                console.log(resp);
                 if (resp.result === "success") {
                     location.reload();
                 } else {
@@ -289,17 +284,18 @@ class Settings
     }
 
     logout_on_remote() {
-        if (this.platform === "ACAPP") return false;
-
-        $.ajax({
-            url: "https://app5873.acapp.acwing.com.cn/settings/logout/",
-            type: "GET",
-            success: function(resp) {
-                console.log(resp);
-                if (resp.result === "success") {
-                    location.reload();
+        if (this.platform === "ACAPP") {
+            this.root.AcWingOS.api.window.close();
+        } else {
+            $.ajax({
+                url: "https://app5873.acapp.acwing.com.cn/settings/logout/",
+                type: "GET",
+                success: function(resp) {
+                    if (resp.result === "success") {
+                        location.reload();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
